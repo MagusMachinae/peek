@@ -1,0 +1,4 @@
+#+TITLE: Peek Docs
+
+* References
+** The mathematics of quantum mechanics, Martin Laforest
