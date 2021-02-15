@@ -9,6 +9,7 @@
 
 (def symbols-default
   {:time 't
+   :space ['x 'y 'z]
    :field-amplitude 'E0
    :wave-number 'k
    :angular-frequency 'omega
@@ -28,10 +29,15 @@ It would be nice to be able to represent this in a coordinate-free way!"
 
   ([] (plane-wave 'x symbols-default))
   ([x symbols-default]
-   (let [{:keys [time field-amplitude wave-number angular-frequency phase]} symbols-default]
+   (let [{:keys [time
+                 space
+                 field-amplitude
+                 wave-number
+                 angular-frequency
+                 phase]} symbols-default]
      (* field-amplitude (exp
                          (+
-                          (wave-product 'k ['x 'y 'z])
+                          (wave-product wave-number space)
                           (* (- I) time angular-frequency)
                           phase))))))
 
