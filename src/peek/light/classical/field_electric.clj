@@ -1,6 +1,7 @@
 (ns peek.light.classical.field-electric
   "A placeholder for convenience functions that create or operate on a classical electric field vector."
   (:require
+   [clojure.string :as string]
    [sicmutils.generic :as gen :refer [* exp - +]]
    [sicmutils.complex :as com :refer [I]]
    [sicmutils.structure :as struc :refer [up down]]
@@ -13,6 +14,15 @@
    :angular-frequency 'omega
    :phase 'phase})
 
+(defn wave-product [k coordinates-spatial]
+  "Creates a symbolic inner product of k and r, where k is the wavenumber symbol and r is a vector of symbols that represents the coordinate basis.
+
+
+It would be nice to be able to represent this in a coordinate-free way!"
+  (let [ksyms (mapv (comp symbol string/join)
+                    (map reverse (into [] (zipmap  coordinates-spatial (repeat k)))))]
+    (* (struc/down* ksyms) (struc/up* coordinates-spatial))))
+
 (defn plane-wave
   "TODO: structureify the wavenumber multiplication."
 
@@ -21,7 +31,7 @@
    (let [{:keys [time field-amplitude wave-number angular-frequency phase]} symbols-default]
      (* field-amplitude (exp
                          (+
-                          (* wave-number x)
+                          (wave-product 'k ['x 'y 'z])
                           (* (- I) time angular-frequency)
                           phase))))))
 
