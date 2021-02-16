@@ -1,5 +1,10 @@
 (ns peek.light.classical.field-electric
-  "A placeholder for convenience functions that create or operate on a classical electric field vector."
+  "A placeholder for convenience functions that create or operate on a classical electric field vector.
+
+  TODO: Some of the functions should be abstracted before creating the equivalent code for magnetic fields.
+
+  In the future, as much as possible should be coordinate free by default.
+  "
   (:require
    [clojure.string :as string]
    [sicmutils.generic :as gen :refer [* exp - +]]
