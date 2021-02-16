@@ -21,14 +21,15 @@
 
 It would be nice to be able to represent this in a coordinate-free way!"
   (let [ksyms (mapv (comp symbol string/join)
-                    (map reverse (into [] (zipmap  coordinates-spatial (repeat k)))))]
+                    (map reverse (mapv vector  coordinates-spatial (repeat k))))]
     (* (struc/down* ksyms) (struc/up* coordinates-spatial))))
 
 (defn plane-wave
-  "TODO: structureify the wavenumber multiplication."
+  "Propagation is a vector used to select the space vector"
 
-  ([] (plane-wave 'x symbols-default))
-  ([x symbols-default]
+  ([] (plane-wave [0 0 1] symbols-default))
+  ([propagation] (plane-wave propagation symbols-default))
+  ([propagation symbols-default]
    (let [{:keys [time
                  space
                  field-amplitude
@@ -37,7 +38,8 @@ It would be nice to be able to represent this in a coordinate-free way!"
                  phase]} symbols-default]
      (* field-amplitude (exp
                          (+
-                          (wave-product wave-number space)
+                          (println (mapv * propagation space))
+                          (wave-product wave-number (mapv * propagation space))
                           (* (- I) time angular-frequency)
                           phase))))))
 
@@ -53,13 +55,14 @@ It would be nice to be able to represent this in a coordinate-free way!"
   ([]
    (up (plane-wave) 0 0))
   ([key]
-   ;; (case key
-   ;;   :LC
-   ;;   :RC
-   ;;   :pi)
-   )
-  ;; ([time field-amplitude angular-frequency phase]
-  ;;  (up
-  ;;   0
-  ;;   0))
-  )
+   (case key
+     :lc (* (/ -1 (gen/sqrt 2.0))
+            (plane-wave)
+            (up 1 I 0))
+     :rc (* (/ 1 (gen/sqrt 2.0))
+            (plane-wave)
+            (up 1 (- I) 0))
+     :pi (* (plane-wave [0 1 0])
+            (up 0.0 0.0 1)))))
+
+(println (electric :lc))
