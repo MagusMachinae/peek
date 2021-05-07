@@ -1,39 +1,31 @@
-(ns peek.general.state
+(ns peek.quantum.state
   (:require
+   [peek.general.operator :as op]
    [sicmutils.generic :as gen]
    [sicmutils.complex :as com]
    [sicmutils.structure :as struc]
-   [sicmutils.env :as env]))
+   [sicmutils.env :as e]))
 
 (derive ::ket ::struc/up)
 
 (defn ket
-  "Test"
-  ([bra]
-   {:label (:label bra)
-    :vector ((comp gen/conjugate gen/transpose)
-             (:vector bra))})
+  "Represents a quantum state vector. Is similar to 'up' within the SICM system.
+  TODO: add a contsrutor that takes a bra. Probably using multi-methods?"
+  ([label]
+   {:label label
+    :state (up nil)})
 
   ([label values]
    {:label label
-    :vector (apply struc/up values)}))
+    :state (apply struc/up values)}))
 
 (defn bra
-  ([ket]
-   {:label (:label ket)
-    :vector ((comp gen/conjugate gen/transpose)
-             (:vector ket))})
+  ([label]
+   (op/adjoint (ket label)))
   ([label values]
-   {:label label
-    :vector
-    (apply struc/down values)}))
+   (gen/transpose (ket label  values))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;             Play area...            ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-(comment
-  (println
-   ((comp gen/conjugate gen/transpose))))

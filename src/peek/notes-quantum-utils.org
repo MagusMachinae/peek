@@ -1,0 +1,35 @@
+#+TITLE: Notes and questions relating to the project
+
+* scope
+- non-relativistic QM (at least in the short term)
+* project structure
+** general
+(temporary) Things that are really more maths than physics and could probably be merged with sicm at a later date.
+** quantum
+Genaral manipulations that are specific to a quantum context /e.g./ state vector definitions, operations and the like.
+** light
+Purely optical phenomena
+*** classical
+(probably) Temporary storage for symbolic optical phenomena. Potentially useful (at least) in the short-term for creating semi-classical systems. Should be factored out once it reaches a reasonable size.
+*** quantum
+Quantum optics phenomena.
+** matter
+Atomic phenomena (who knows, it might extend to include molecules!)
+** WAIT light-matter
+Systems that involve coupling between the two!
+
+I'd really like to do something with polaritons here (some day...).
+* sicm
+** bugs
+*** 'up' no argument check
+Null pointer exception when passing no arguments
+(e/->infix (struc/up* []))
+* Questions
+** Hudson Paper
+*** How can we avoid the dual space?
+I would really like to understand what Hudson means when he suggests that the dual space is unnecessary. Can we really completely rewrite bras?
+* References
+** Maxima
+*** itensor
+A library for working with indexed tensors.
+https://maxima.sourceforge.io/docs/manual/maxima_123.html
