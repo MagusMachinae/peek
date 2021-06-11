@@ -8,18 +8,27 @@
 
 (derive ::ket ::up)
 
+(defn state? [coll]
+  "This is a "
+  (and (contains? coll :label)
+       (contains? coll :state)
+       (or (= (:type coll) ::ket)
+           (= (:type coll) ::bra))))
+
 (defn ket
   "Represents a quantum state vector. Is similar to 'up' within the SICM system.
   TODO: add a contsrutor that takes a bra. Probably using multi-methods?"
   ([label]
    {:label label
-    :state (up nil)})
+    :state (up nil)
+    :type ::ket})
 
   ([label values]
    {:label label
     :state (apply struc/up values)}))
 
 (defn bra
+  "TODO: Check corner cases and include type."
   ([label]
    (op/adjoint (ket label)))
   ([label values]

@@ -1,6 +1,5 @@
 (ns peek.scratch
   "A sandbox for throwing around the toys."
-
   [:require
    [sicmutils.env :refer [+ - * /]]
    [sicmutils.expression :as x]
@@ -13,9 +12,11 @@
 (def quantum-ruleset
   (let []
     (rule/ruleset
-     (*  (? ?a v/scalar?) (+ ?state1 ?state2))
+     (*  (? ?a v/scalar?) (+ (? ?state1 state/state?) (? ?state2 state/state?)))
      =>
-     (+ (* ?a ?state1) (* ?a ?state2)))))
+     (+ (* ?a ?state1) (* ?a ?state2)))
+
+    (* (+ (? ?a1 v/scalar?) (? ?a2 v/scalar?)) ?state1) => (+ (* ?a1 ?state1) (* ?a2 ?state1))))
 
 (let [rs quantum-ruleset
       s (rule/rule-simplifier rs)
@@ -23,4 +24,8 @@
       psi1 (state/ket "1")
       psi2 (state/ket "2")]
 
-  (println (s '(* 5.0 (+ psi1 psi2)))))
+  (println (s '(* 5.0 (+ psi1 psi2))))
+  (println (s '(* (+ 5.0 5.0) psi1))))
+
+(comment
+  "How do i declare that random symbols are actually 'things' i.e. scalars etc?")
