@@ -28,6 +28,10 @@ Null pointer exception when passing no arguments
 ** Hudson Paper
 *** How can we avoid the dual space?
 I would really like to understand what Hudson means when he suggests that the dual space is unnecessary. Can we really completely rewrite bras?
+** git
+*** how do i keep my branch private but share the other branches?
+** sicm
+*** is there a system for passing assumptions to the simplifier?
 * References
 ** Maxima
 *** itensor

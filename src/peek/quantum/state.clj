@@ -3,10 +3,10 @@
    [peek.general.operator :as op]
    [sicmutils.generic :as gen]
    [sicmutils.complex :as com]
-   [sicmutils.structure :as struc]
+   [sicmutils.structure :as struc :refer [up]]
    [sicmutils.env :as e]))
 
-(derive ::ket ::struc/up)
+(derive ::ket ::up)
 
 (defn ket
   "Represents a quantum state vector. Is similar to 'up' within the SICM system.
