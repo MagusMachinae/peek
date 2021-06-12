@@ -4,16 +4,21 @@
    [sicmutils.generic :as gen]
    [sicmutils.complex :as com]
    [sicmutils.structure :as struc :refer [up]]
+   [sicmutils.value :as value]
    [sicmutils.env :as e]))
 
 (derive ::ket ::up)
 
 (defn state? [coll]
-  "This is a "
-  (and (contains? coll :label)
-       (contains? coll :state)
-       (or (= (:type coll) ::ket)
-           (= (:type coll) ::bra))))
+  "This is a fast, naive way of checking if the argument is a state.
+FIXME: It also doesn't work... :(."
+  (do (println (type  coll))
+      (when (coll? coll)
+        (do (println "got here")
+            (and (contains? coll :label)
+                 (contains? coll :state)
+                 (or (= (:type coll) :ket)
+                     (= (:type coll) :bra)))))))
 
 (defn ket
   "Represents a quantum state vector. Is similar to 'up' within the SICM system.
@@ -21,7 +26,7 @@
   ([label]
    {:label label
     :state (up nil)
-    :type ::ket})
+    :type :ket})
 
   ([label values]
    {:label label
